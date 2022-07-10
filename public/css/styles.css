@@ -3,6 +3,10 @@ html {
   position: relative;
 }
 
+body {
+  background-color: #ffefd8;
+}
+
 #particles-js {
   margin: 0;
   height: 90vh;
