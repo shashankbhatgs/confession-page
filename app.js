@@ -31,12 +31,23 @@ const postSchema = {
 const Post = mongoose.model("Post", postSchema);
 
 app.get("/", function (req, res) {
+  res.render("home");
+})
 
-  Post.find({}, function (err, posts) {
-    res.render("home", {
-      startingContent: homeStartingContent,
-      posts: posts
-    });
+app.post("/", function (req, res) {
+  const date = new Date();
+  const post = new Post({
+    title: req.body.postTitle,
+    category: req.body.postCategory,
+    content: req.body.postBody,
+    postDate: date.toDateString()
+  });
+
+  // posts.push(post);
+  post.save(function (err) {
+    if (!err) {
+      res.redirect("/");
+    }
   });
 });
 
@@ -53,42 +64,16 @@ app.get("/contact", function (req, res) {
 });
 
 app.get("/confess", function (req, res) {
-  res.render("confess");
+  Post.find({}, function (err, posts) {
+    res.render("confess", {
+      posts: posts
+    });
+  });
 });
 
-app.post("/confess", function (req, res) {
-  const date = new Date();
-  const post = new Post({
-    title: req.body.postTitle,
-    category: req.body.postCategory,
-    content: req.body.postBody,
-    postDate: date.toDateString()
-  });
-
-  // posts.push(post);
-  post.save(function (err) {
-    if (!err) {
-      res.redirect("/");
-    }
-  });
-
-});
 
 app.get("/posts/:postId", function (req, res) {
-  // const requestedTitle = _.lowerCase(req.params.postName);
   const requestedPostId = req.params.postId;
-
-  // posts.forEach(function (post) {
-  //   const storedTitle = _.lowerCase(post.title);
-
-  //   if (storedTitle === requestedTitle) {
-  //     res.render("post", {
-  //       title: post.title,
-  //       content: post.content
-  //     });
-  //   }
-  // });
-
   Post.findOne({
     _id: requestedPostId
   }, function (err, post) {
