@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/blogDB");
-
-
+mongoose.connect("mongodb://localhost:27017/confessionDB");
 
 const postSchema = {
   title: String,
-  content: String
+  category: String,
+  content: String,
+  postDate: String
 };
 
 const Post = mongoose.model("Post", postSchema);
@@ -57,9 +57,12 @@ app.get("/confess", function (req, res) {
 });
 
 app.post("/confess", function (req, res) {
+  const date = new Date();
   const post = new Post({
     title: req.body.postTitle,
-    content: req.body.postBody
+    category: req.body.postCategory,
+    content: req.body.postBody,
+    postDate: date.toDateString()
   });
 
   // posts.push(post);
