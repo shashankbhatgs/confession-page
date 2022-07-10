@@ -1,20 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 
-<%- include("partials/header"); -%>
-    <h1>Home</h1>
-    <p> <%= startingContent %> </p>
+<head>
+  <meta charset="utf-8">
+  <title>Confession Page</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand">CONFESSION PAGE</p>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="home"><a href="/">HOME</a></li>
+        <li id="confess"><a href="/confess">CONFESS</a></li>
+        <li id="about"><a href="/about">ABOUT</a></li>
+        <li id="contact"><a href="/contact">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<body>
+
+  <div id="particles-js">
+    <h1>Anonymous Confession Page</h1>
+    <p>A page to feel known, loved, accepted and appreciated.</p>
+  </div>
+
+  <div class="container">
+    <!-- 
+  <h1>Home</h1>
+  <p>
+    <%= startingContent %>
+  </p> -->
+    <% for (const post of posts.reverse()) { %>
+      <h1>
+        <%=post.title%>
+      </h1>
+      <p>
+        <%=post.content.substring(0, 100) + " ..." %>
+          <!-- here i have changed the post name to post._id -->
+          <a href="/posts/<%=post._id%>">Read More</a>
+      </p>
+      <% }%>
 
 
-  <%  posts.forEach(function(post){ %>
-
-    <h1><%=post.title%></h1>
-    <p>
-    <%=post.content.substring(0, 100) + " ..."%>
-    <!-- here i have changed the post name to post._id -->
-    <a href="/posts/<%=post._id%>">Read More</a>
-    </p>
-
-
-    <% }) %>
-
-
-<%- include("partials/footer"); -%>
+        <%- include("partials/footer"); -%>
